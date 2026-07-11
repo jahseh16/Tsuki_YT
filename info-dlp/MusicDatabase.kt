@@ -60,19 +60,7 @@ class MusicDatabase(
         PlaylistSongMapPreview::class
     ],
     version = 12,
-    exportSchema = true,
-    autoMigrations = [
-        AutoMigration(from = 2, to = 3),
-        AutoMigration(from = 3, to = 4),
-        AutoMigration(from = 4, to = 5),
-        AutoMigration(from = 5, to = 6, spec = Migration5To6::class),
-        AutoMigration(from = 6, to = 7, spec = Migration6To7::class),
-        AutoMigration(from = 7, to = 8, spec = Migration7To8::class),
-        AutoMigration(from = 8, to = 9),
-        AutoMigration(from = 9, to = 10, spec = Migration9To10::class),
-        AutoMigration(from = 10, to = 11, spec = Migration10To11::class),
-        AutoMigration(from = 11, to = 12, spec = Migration11To12::class)
-    ]
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class InternalDatabase : RoomDatabase() {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TsukiYT</string>
+    <string name="home">Home</string>
+    <string name="action_like">Action Like</string>
+    <string name="action_remove_like">Action Remove Like</string>
+    <string name="action_shuffle_off">Action Shuffle Off</string>
+    <string name="action_shuffle_on">Action Shuffle On</string>
+    <string name="add_to_library">Add To Library</string>
+    <string name="albums">Albums</string>
+    <string name="artists">Artists</string>
+    <string name="downloaded_songs">Downloaded Songs</string>
+    <string name="error_no_internet">Error No Internet</string>
+    <string name="error_no_stream">Error No Stream</string>
+    <string name="error_timeout">Error Timeout</string>
+    <string name="error_unknown">Error Unknown</string>
+    <string name="liked_songs">Liked Songs</string>
+    <string name="music_player">Music Player</string>
+    <string name="playlists">Playlists</string>
+    <string name="remove_from_library">Remove From Library</string>
+    <string name="repeat_mode_all">Repeat Mode All</string>
+    <string name="repeat_mode_off">Repeat Mode Off</string>
+    <string name="repeat_mode_one">Repeat Mode One</string>
+    <string name="search">Search</string>
+    <string name="search_library">Search Library</string>
+    <string name="search_yt_music">Search Yt Music</string>
+    <string name="songs">Songs</string>
+    <plurals name="n_song">
+        <item quantity="one">%d song</item>
+        <item quantity="other">%d songs</item>
+    </plurals>
+</resources>

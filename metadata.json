@@ -1,0 +1,8 @@
+{
+  "name": "TsukiYT",
+  "description": "A beautiful YouTube Music streaming and local playback client with offline support, playlists, dynamic lyrics, and Material 3 design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -7,6 +7,8 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
@@ -15,10 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.palette.graphics.Palette
-import com.google.material.color.dynamiccolor.DynamicScheme
-import com.google.material.color.hct.Hct
-import com.google.material.color.scheme.SchemeTonalSpot
-import com.google.material.color.score.Score
 
 val DefaultThemeColor = Color(0xFF4285F4)
 
@@ -35,9 +33,24 @@ fun InnerTuneTheme(
             if (darkTheme) dynamicDarkColorScheme(context).pureBlack(pureBlack)
             else dynamicLightColorScheme(context)
         } else {
-            SchemeTonalSpot(Hct.fromInt(themeColor.toArgb()), darkTheme, 0.0)
-                .toColorScheme()
-                .pureBlack(darkTheme && pureBlack)
+            val baseScheme = if (darkTheme) {
+                darkColorScheme(
+                    primary = themeColor,
+                    primaryContainer = themeColor.copy(alpha = 0.3f),
+                    secondary = themeColor,
+                    background = Color(0xFF121212),
+                    surface = Color(0xFF1E1E1E)
+                )
+            } else {
+                lightColorScheme(
+                    primary = themeColor,
+                    primaryContainer = themeColor.copy(alpha = 0.1f),
+                    secondary = themeColor,
+                    background = Color(0xFFFFFFFF),
+                    surface = Color(0xFFF5F5F5)
+                )
+            }
+            baseScheme.pureBlack(darkTheme && pureBlack)
         }
     }
 
@@ -49,53 +62,10 @@ fun InnerTuneTheme(
 }
 
 fun Bitmap.extractThemeColor(): Color {
-    val colorsToPopulation = Palette.from(this)
-        .maximumColorCount(8)
-        .generate()
-        .swatches
-        .associate { it.rgb to it.population }
-    val rankedColors = Score.score(colorsToPopulation)
-    return Color(rankedColors.first())
+    val palette = Palette.from(this).generate()
+    val vibrant = palette.getVibrantColor(DefaultThemeColor.toArgb())
+    return Color(vibrant)
 }
-
-fun DynamicScheme.toColorScheme() = ColorScheme(
-    primary = Color(primary),
-    onPrimary = Color(onPrimary),
-    primaryContainer = Color(primaryContainer),
-    onPrimaryContainer = Color(onPrimaryContainer),
-    inversePrimary = Color(inversePrimary),
-    secondary = Color(secondary),
-    onSecondary = Color(onSecondary),
-    secondaryContainer = Color(secondaryContainer),
-    onSecondaryContainer = Color(onSecondaryContainer),
-    tertiary = Color(tertiary),
-    onTertiary = Color(onTertiary),
-    tertiaryContainer = Color(tertiaryContainer),
-    onTertiaryContainer = Color(onTertiaryContainer),
-    background = Color(background),
-    onBackground = Color(onBackground),
-    surface = Color(surface),
-    onSurface = Color(onSurface),
-    surfaceVariant = Color(surfaceVariant),
-    onSurfaceVariant = Color(onSurfaceVariant),
-    surfaceTint = Color(primary),
-    inverseSurface = Color(inverseSurface),
-    inverseOnSurface = Color(inverseOnSurface),
-    error = Color(error),
-    onError = Color(onError),
-    errorContainer = Color(errorContainer),
-    onErrorContainer = Color(onErrorContainer),
-    outline = Color(outline),
-    outlineVariant = Color(outlineVariant),
-    scrim = Color(scrim),
-    surfaceBright = Color(surfaceBright),
-    surfaceDim = Color(surfaceDim),
-    surfaceContainer = Color(surfaceContainer),
-    surfaceContainerHigh = Color(surfaceContainerHigh),
-    surfaceContainerHighest = Color(surfaceContainerHighest),
-    surfaceContainerLow = Color(surfaceContainerLow),
-    surfaceContainerLowest = Color(surfaceContainerLowest)
-)
 
 fun ColorScheme.pureBlack(apply: Boolean) =
     if (apply) copy(

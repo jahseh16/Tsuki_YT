@@ -1,12 +1,6 @@
 package com.zionhuang.innertube
 
-import com.zionhuang.innertube.encoder.brotli
-import com.zionhuang.innertube.models.Context
-import com.zionhuang.innertube.models.YouTubeClient
-import com.zionhuang.innertube.models.YouTubeLocale
-import com.zionhuang.innertube.models.body.*
-import com.zionhuang.innertube.utils.parseCookieString
-import com.zionhuang.innertube.utils.sha1
+import com.zionhuang.innertube.models.*
 import io.ktor.client.*
 import io.ktor.client.engine.okhttp.*
 import io.ktor.client.plugins.*
@@ -20,6 +14,18 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import java.net.Proxy
 import java.util.*
+
+private fun parseCookieString(cookieString: String): Map<String, String> {
+    return cookieString.split(";")
+        .map { it.trim().split("=", limit = 2) }
+        .filter { it.size == 2 }
+        .associate { it[0] to it[1] }
+}
+
+private fun sha1(input: String): String {
+    val md = java.security.MessageDigest.getInstance("SHA-1")
+    return md.digest(input.toByteArray()).joinToString("") { "%02x".format(it) }
+}
 
 /**
  * Provide access to InnerTube endpoints.
@@ -62,7 +68,6 @@ class InnerTube {
         }
 
         install(ContentEncoding) {
-            brotli(1.0F)
             gzip(0.9F)
             deflate(0.8F)
         }
